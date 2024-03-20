@@ -1,3 +1,2 @@
-export * from "./produtoMapper";
-export * from "./clienteMapper";
-export * from "./pedidoMapper";
+export * from "./pontoMapper";
+export * from "./usuarioMapper";

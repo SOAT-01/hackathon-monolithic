@@ -1,4 +1,3 @@
-import { testMongoConnection } from "external/mongo/helpers/testMongoConnection";
 import { NextFunction, Request, Response } from "express";
 
 export class HealthController {
@@ -8,11 +7,7 @@ export class HealthController {
         next: NextFunction,
     ): Promise<Response> {
         try {
-            if (await testMongoConnection()) {
-                return res.status(200).send("Healthy");
-            } else {
-                return res.status(500).send("Unhealthy");
-            }
+            return res.status(200).send("Healthy");
         } catch {
             next(next);
         }

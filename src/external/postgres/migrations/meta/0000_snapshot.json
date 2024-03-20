@@ -1,0 +1,63 @@
+{
+  "id": "cf2c2f04-d716-4a24-85e6-eb10641753c4",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "5",
+  "dialect": "pg",
+  "tables": {
+    "pontos": {
+      "name": "pontos",
+      "schema": "Ponto",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "tipo": {
+          "name": "tipo",
+          "type": "tipo",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data": {
+          "name": "data",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "usuario_id": {
+          "name": "usuario_id",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {
+    "tipo": {
+      "name": "tipo",
+      "values": {
+        "entrada": "entrada",
+        "saida_intervalo": "saida_intervalo",
+        "entrada_intervalo": "entrada_intervalo",
+        "saida": "saida"
+      }
+    }
+  },
+  "schemas": {
+    "Ponto": "Ponto"
+  },
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

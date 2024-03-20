@@ -1,3 +1,5 @@
-export * from "./pedido/pedidoUseCase";
-export * from "./pedido/dto";
-export * from "./pedido/factory";
+export * from "./ponto/pontoUseCase";
+export * from "./ponto/dto";
+export * from "./ponto/factory";
+
+export * from "./usuario/dto";
