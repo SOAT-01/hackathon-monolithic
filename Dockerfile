@@ -2,7 +2,7 @@ FROM node:18-slim
 
 RUN ["apt-get", "update"]
 
-WORKDIR /fastFood
+WORKDIR /hackathon
 
 COPY . .
 

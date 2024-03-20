@@ -1,32 +1,46 @@
 version: "3"
 
 services:
-    mongo:
-        container_name: fastFoodMongodb
-        image: mongo:latest
+    postgres:
+        container_name: hackathonPostgresdb
+        image: postgres:latest
         ports:
-            - "27017:27017"
+            - "5432:5432"
+        environment:
+            POSTGRES_DB: hackathon
+            POSTGRES_USER: hackathon
+            POSTGRES_PASSWORD: hackathon
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+            interval: 10s
+            timeout: 5s
         volumes:
-            - ./data/db:/data/db
+            - pgdata:/var/lib/postgresql/data
         networks:
-            - fastFoodNetwork
+            - hackathonNetwork
     api:
-        container_name: fastFoodApi
+        container_name: hackathonApi
         build: "."
-        working_dir: /fastFood
+        working_dir: /hackathon
         environment:
             NODE_ENV: development
-            MONGODB_CONN_STRING: mongodb://mongo:27017
+            POSTGRES_DB: hackathon
+            POSTGRES_DB_HOST: postgres
+            POSTGRES_DB_PORT: 5432
+            POSTGRES_DB_USER: hackathon
+            POSTGRES_DB_PASSWORD: hackathon
         command: sh -c "npm run start"
         depends_on:
             postgres:
                 condition: service_healthy
-            mongo:
-                condition: service_started
         ports:
             - "6001:6001"
         networks:
-            - fastFoodNetwork
+            - hackathonNetwork
 networks:
-    fastFoodNetwork:
+    hackathonNetwork:
         driver: bridge
+
+volumes:
+    pgdata:
+
