@@ -1,7 +1,3 @@
-import { PedidoMapper } from "adapters/mappers";
-import { Item, StatusPagamentoEnum, StatusPedidoEnum } from "entities/pedido";
-import { ClienteDTO } from "external/clienteService";
-import { PedidoDTO } from "useCases";
 import { AssertionConcern } from "utils/assertionConcern";
 import { ValidationError } from "utils/errors/validationError";
 
@@ -156,28 +152,6 @@ describe("Given AssertionConcern", () => {
                 testValue2,
             );
             expect(result).toBe(false);
-        });
-    });
-    describe("When assertArgumentHasQuantityAndPrice is called", () => {
-        it("should validate list of itens", () => {
-            const testValue: Item[] = [
-                { produtoId: "1", quantidade: 1, preco: 10 },
-            ];
-            AssertionConcern.assertArgumentHasQuantityAndPrice(
-                testValue,
-                "List does not contain required fields",
-            );
-        });
-        it("should throw an error if list itens does not contain required fields", () => {
-            const testValue: Partial<Item>[] = [{ produtoId: "2" }];
-
-            expect(() =>
-                AssertionConcern.assertArgumentHasQuantityAndPrice(
-                    // @ts-ignore
-                    testValue,
-                    "List does not contain required fields",
-                ),
-            ).toThrowError();
         });
     });
     describe("When assertArgumentIsObjectId is called", () => {

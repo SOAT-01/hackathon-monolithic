@@ -56,7 +56,8 @@ export class PontoUseCase implements IPontoUseCase {
             throw new ValidationError("É necessário informar id do usuário");
         }
 
-        const results = await this.pontoGateway.findManyByUsuarioId(usuarioId);
+        const results =
+            await this.pontoGateway.findManyFromLastMonthByUsuarioId(usuarioId);
 
         if (!results.length)
             throw new ResourceNotFoundError("Pontos não encontrados");

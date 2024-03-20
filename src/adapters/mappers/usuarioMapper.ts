@@ -10,13 +10,4 @@ export class UsuarioMapper {
             email: dto?.email,
         });
     }
-
-    // public static toDTO(entitie: Ponto): PontoDTO {
-    //     return {
-    //         id: entitie?.id,
-    //         usuarioId: entitie.usuarioId,
-    //         data: entitie?.data,
-    //         tipo: entitie?.tipo,
-    //     };
-    // }
 }
