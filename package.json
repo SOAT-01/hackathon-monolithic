@@ -1,7 +1,7 @@
 {
-    "name": "fiap-soat1-tech-challenge",
+    "name": "fiap-soat1-hackathon",
     "version": "1.0.0",
-    "description": "Projeto do curso da pós tech Fiap Arquitetura de Software",
+    "description": "Projeto do Hackathon da pós tech Fiap Arquitetura de Software",
     "main": "index.js",
     "scripts": {
         "test": "jest --verbose false",
@@ -9,13 +9,12 @@
         "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/api/index.ts ",
         "build": "tsc --project ./tsconfig.build.json && tsc-alias -p ./tsconfig.build.json",
         "start": "node build/api/index.js",
-        "start:docker": "docker compose -p fastfood up --build",
+        "start:docker": "docker compose -p hackathon up --build",
         "lint": "eslint .",
         "lint:fix": "eslint --fix --ext .ts .",
         "typecheck": "tsc --project tsconfig.json --noEmit --pretty",
         "generate": "drizzle-kit generate:pg --config=./src/external/postgres/drizzle.config.ts",
-        "migrate": "tsx ./src/external/postgres/helpers/migratePostgresDatabase.ts",
-        "seed": "tsx ./src/external/postgres/helpers/seedPostgresDatabase.ts"
+        "migrate": "tsx ./src/external/postgres/helpers/migratePostgresDatabase.ts"
     },
     "repository": {
         "type": "git",
