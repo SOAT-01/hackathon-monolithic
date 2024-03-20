@@ -4,6 +4,7 @@ import { PontoSchema } from "external/postgres/schemas";
 import { PontoGateway } from "interfaces/gateways";
 import { Ponto, Tipo } from "entities/ponto";
 import { PontoMapper } from "adapters/mappers";
+import { getPreviousMonthDates } from "utils/getPreviousMonthDates";
 
 export class PontoPostgresGateway implements PontoGateway {
     constructor(
@@ -58,15 +59,16 @@ export class PontoPostgresGateway implements PontoGateway {
     public async findManyFromLastMonthByUsuarioId(
         usuarioId: string,
     ): Promise<Ponto[] | undefined> {
+        const { firstDate, lastDate } = getPreviousMonthDates(new Date());
+
         const results = await this.postgresDB
             .select()
             .from(this.pontoSchema)
             .where(
                 and(
                     eq(this.pontoSchema.usuarioId, usuarioId),
-                    // TODO FIX DATES TO ONLY PREVIOUS FROM CURRENT MONTH
-                    gte(this.pontoSchema.data, new Date()),
-                    lt(this.pontoSchema.data, new Date()),
+                    gte(this.pontoSchema.data, firstDate),
+                    lt(this.pontoSchema.data, lastDate),
                 ),
             )
             .orderBy(desc(this.pontoSchema.data));
