@@ -1,4 +1,4 @@
-import { PontoPaths } from "./pedido";
+import { PontoPaths } from "./ponto";
 
 export const ApiPaths = {
     ...PontoPaths,
