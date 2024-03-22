@@ -92,12 +92,50 @@ export class PontoUseCase implements IPontoUseCase {
         }
     }
 
-    private calculateHoursPassed(startDate: Date, endDate: Date): number {
+    private calculateTimePassed(
+        startDate: Date,
+        endDate: Date,
+    ): { hours: number; minutes: number } {
         const millisecondsPerHour = 1000 * 60 * 60;
+        const millisecondsPerMinute = 1000 * 60;
+
         const millisecondsPassed = Math.abs(
             endDate.getTime() - startDate.getTime(),
         );
-        return Math.floor(millisecondsPassed / millisecondsPerHour);
+
+        const hours = Math.floor(millisecondsPassed / millisecondsPerHour);
+        const remainingMilliseconds = millisecondsPassed % millisecondsPerHour;
+
+        const minutes = Math.floor(
+            remainingMilliseconds / millisecondsPerMinute,
+        );
+
+        return { hours, minutes };
+    }
+
+    private formatTime(hours: number, minutes: number): string {
+        return `${hours.toString().padStart(2, "0")}:${minutes
+            .toString()
+            .padStart(2, "0")}:00`;
+    }
+
+    private sumTime(
+        timeA: { hours: number; minutes: number },
+        timeB: { hours: number; minutes: number },
+    ): { hours: number; minutes: number; formated: string } {
+        let hours = timeA.hours + timeB.hours;
+        let minutes = timeA.minutes + timeB.minutes;
+
+        if (minutes >= 60) {
+            hours += Math.floor(minutes / 60);
+            minutes %= 60;
+        }
+
+        return {
+            hours,
+            minutes,
+            formated: this.formatTime(hours, minutes),
+        };
     }
 
     private formatDate(date: Date): string {
@@ -107,23 +145,11 @@ export class PontoUseCase implements IPontoUseCase {
         return `${day}-${month}-${year}`;
     }
 
-    private formatTime(date: Date): string {
-        const hours = date.getHours().toString().padStart(2, "0");
-        const minutes = date.getMinutes().toString().padStart(2, "0");
-        const seconds = date.getSeconds().toString().padStart(2, "0");
+    private formatDateToTime(date: Date): string {
+        const hours = date.getUTCHours().toString().padStart(2, "0");
+        const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+        const seconds = date.getUTCSeconds().toString().padStart(2, "0");
         return `${hours}:${minutes}:${seconds}`;
-    }
-
-    private formatHours(hours: number): string {
-        const absoluteHours = Math.abs(hours);
-        const formattedHours = Math.floor(absoluteHours);
-        const minutes = Math.floor((absoluteHours - formattedHours) * 60);
-
-        const sign = hours < 0 ? "-" : "";
-
-        return `${sign}${formattedHours.toString().padStart(2, "0")}:${minutes
-            .toString()
-            .padStart(2, "0")}`;
     }
 
     private groupByDate(pontos: Ponto[]): { [key: string]: Ponto[] } {
@@ -141,52 +167,66 @@ export class PontoUseCase implements IPontoUseCase {
     }
 
     private mapReportDTO(pontos: Ponto[]): PontoReportDTO[] {
+        if (!pontos.length) return [];
+
         const groupedByDate = this.groupByDate(pontos);
 
         const result: PontoReportDTO[] = [];
 
         Object.keys(groupedByDate).forEach((date) => {
             const pontos = groupedByDate[date];
+            const sorted = pontos.sort(
+                (a, b) => a.data.valueOf() - b.data.valueOf(),
+            );
 
-            if (pontos.length <= 3) {
-                const [entrada, saidaIntervalo] = pontos;
+            if (sorted.length <= 3) {
+                const [entrada, saidaIntervalo] = sorted;
 
-                const firstPeriod = this.calculateHoursPassed(
+                const firstPeriod = this.calculateTimePassed(
                     entrada.data,
                     saidaIntervalo.data,
                 );
 
                 result.push({
                     data: date,
-                    entrada: this.formatTime(entrada.data),
-                    saidaAlmoco: this.formatTime(saidaIntervalo.data),
+                    entrada: this.formatDateToTime(entrada.data),
+                    saidaAlmoco: this.formatDateToTime(saidaIntervalo.data),
                     entradaAlmoco: "-",
                     saida: "-",
-                    totalHoras: this.formatHours(firstPeriod),
+                    totalHoras: this.formatTime(
+                        firstPeriod.hours,
+                        firstPeriod.minutes,
+                    ),
                 });
             } else {
                 const [entrada, saidaIntervalo, entradaIntervalo, saida] =
-                    pontos;
+                    sorted;
 
-                const firstPeriod = this.calculateHoursPassed(
+                const firstPeriod = this.calculateTimePassed(
                     entrada.data,
                     saidaIntervalo.data,
                 );
 
-                const secondPeriod = this.calculateHoursPassed(
+                const secondPeriod = this.calculateTimePassed(
                     entradaIntervalo.data,
                     saida.data,
                 );
 
-                const totalHora = firstPeriod + secondPeriod;
+                const totalTempo = this.sumTime(firstPeriod, secondPeriod);
+                if (date === "01-02-2024")
+                    console.log({
+                        firstPeriod,
+                        secondPeriod,
+                        totalTempo,
+                    });
 
                 result.push({
                     data: date,
-                    entrada: this.formatTime(entrada.data),
-                    saidaAlmoco: this.formatTime(saidaIntervalo.data),
-                    entradaAlmoco: this.formatTime(entradaIntervalo.data),
-                    saida: this.formatTime(saida.data),
-                    totalHoras: this.formatHours(totalHora),
+                    entrada: this.formatDateToTime(entrada.data),
+                    saidaAlmoco: this.formatDateToTime(saidaIntervalo.data),
+                    entradaAlmoco: this.formatDateToTime(entradaIntervalo.data),
+                    saida: this.formatDateToTime(saida.data),
+                    totalHoras: totalTempo.formated,
                 });
             }
         });
