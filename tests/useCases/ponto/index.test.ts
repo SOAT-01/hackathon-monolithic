@@ -128,7 +128,7 @@ describe("Given PedidoUseCases", () => {
             expect(pontogatewayFindManyByUsuarioId).toHaveBeenCalled();
             expect(result).toHaveLength(1);
             expect(result[0].data).toEqual("10-01-2024");
-            expect(result[0].totalHoras).toEqual("08:00");
+            expect(result[0].totalHoras).toEqual("08:00:00");
         });
     });
     describe("When getAllByUsuarioId is called", () => {
