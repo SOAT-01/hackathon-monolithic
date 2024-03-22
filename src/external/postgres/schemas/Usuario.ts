@@ -1,8 +1,6 @@
-import { pgSchema, uuid, varchar } from "drizzle-orm/pg-core";
+import { pgTable, uuid, varchar } from "drizzle-orm/pg-core";
 
-export const usuarioSchema = pgSchema("Usuario");
-
-export const UsuarioSchema = usuarioSchema.table("Usuarios", {
+export const UsuarioSchema = pgTable("usuarios", {
     id: uuid("id").defaultRandom().primaryKey().notNull(),
     matricula: varchar("matricula", { length: 256 }),
     nome: varchar("nome", { length: 256 }),

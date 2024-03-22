@@ -1,11 +1,4 @@
-import {
-    pgSchema,
-    uuid,
-    varchar,
-    timestamp,
-    pgEnum,
-} from "drizzle-orm/pg-core";
-export const pontoSchema = pgSchema("Ponto");
+import { pgTable, uuid, varchar, timestamp, pgEnum } from "drizzle-orm/pg-core";
 
 export const pgTipoEnum = pgEnum("tipo", [
     "entrada",
@@ -14,7 +7,7 @@ export const pgTipoEnum = pgEnum("tipo", [
     "saida",
 ]);
 
-export const PontoSchema = pontoSchema.table("pontos", {
+export const PontoSchema = pgTable("pontos", {
     id: uuid("id").defaultRandom().primaryKey().notNull(),
     tipo: pgTipoEnum("tipo"),
     data: timestamp("data").defaultNow().notNull(),

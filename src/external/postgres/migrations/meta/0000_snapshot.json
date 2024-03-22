@@ -1,12 +1,12 @@
 {
-  "id": "cf2c2f04-d716-4a24-85e6-eb10641753c4",
+  "id": "2876bd38-3b80-47d6-910d-442bdf679e5c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
   "tables": {
     "pontos": {
       "name": "pontos",
-      "schema": "Ponto",
+      "schema": "",
       "columns": {
         "id": {
           "name": "id",
@@ -39,6 +39,47 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
+    },
+    "usuarios": {
+      "name": "usuarios",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "matricula": {
+          "name": "matricula",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nome": {
+          "name": "nome",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "senha": {
+          "name": "senha",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
     }
   },
   "enums": {
@@ -52,9 +93,7 @@
       }
     }
   },
-  "schemas": {
-    "Ponto": "Ponto"
-  },
+  "schemas": {},
   "_meta": {
     "columns": {},
     "schemas": {},

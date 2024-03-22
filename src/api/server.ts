@@ -8,9 +8,6 @@ import { requestLogger } from "../utils/requestLogger";
 import { SwaggerConfig } from "./docs";
 import { serverConfig } from "config";
 
-// TODO FIX TESTS
-// TODO FIX API DOCS
-
 require("dotenv").config();
 
 function buildServer() {

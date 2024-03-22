@@ -1,3 +1,4 @@
+require("dotenv").config();
 import { parseEnvInt, parseEnvStr } from "./utils";
 
 export const serverConfig = {
