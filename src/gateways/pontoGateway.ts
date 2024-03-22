@@ -1,4 +1,4 @@
-import { eq, and, gte, lt, desc } from "drizzle-orm";
+import { eq, and, gte, lt, desc, asc } from "drizzle-orm";
 import { PostgresDB } from "external/postgres";
 import { PontoSchema } from "external/postgres/schemas";
 import { PontoGateway } from "interfaces/gateways";
@@ -49,7 +49,7 @@ export class PontoPostgresGateway implements PontoGateway {
             .select()
             .from(this.pontoSchema)
             .where(eq(this.pontoSchema.usuarioId, usuarioId))
-            .orderBy(desc(this.pontoSchema.data));
+            .orderBy(asc(this.pontoSchema.data));
 
         if (!results.length) return undefined;
 
@@ -71,7 +71,7 @@ export class PontoPostgresGateway implements PontoGateway {
                     lt(this.pontoSchema.data, lastDate),
                 ),
             )
-            .orderBy(desc(this.pontoSchema.data));
+            .orderBy(asc(this.pontoSchema.data));
 
         if (!results.length) return undefined;
 
