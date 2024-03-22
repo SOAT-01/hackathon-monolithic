@@ -1,0 +1,1 @@
+UPDATE "Ponto"."pontos" SET "usuario_id"='<UUID>' WHERE "usuario_id"='usuarioid1';
