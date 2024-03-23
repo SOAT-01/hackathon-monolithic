@@ -54,6 +54,34 @@ Em qualquer navegador acessar a url:
 http://localhost:6001/api-docs
 ```
 
+## MVP
+
+### Arquitetura
+
+A equipe lançou mão de infraestrutura e padrões já estabelecidos em projetos anteriores para a construção do MVP, priorizando agilidade e eficiência no desenvolvimento.
+
+![diagrama1](https://github.com/SOAT-01/hackathon-monolithic/assets/37314933/3981a994-2ab1-4dd4-8e80-5032ff0cc73e)
+
+- PostgreSQL - por conta da simplicidade estrutural dos dados a serem persistidos e facilidade em se relacionar com outras tabelas
+
+- Elastic Kubernetes Service (EKS) - para gerenciar e orquestrar os contêineres do serviço de forma simples e confiável.
+
+- API Gateway - para expor, gerenciar, proteger e monitorar as APIs do serivço de forma centralizada.
+
+- Simple Queue Service (SQS) - para garantir a comunicação assíncrona entre os diferentes componentes do sistema transmitindo mensagens entre os serviços.
+
+- Lambdas - implementar partes específicas da lógica de negócios de forma isolada e sem a necessidade de gerenciar a infraestrutura subjacente. Composto por 2 lambdas:
+    - lambda authorizer - usado em conjunto com o API Gateway para manter o serviço de autenticação isolado dos demais, além de garantir uma camada de segurança para a autenticação de usuários.
+    - envio de e-mails - desacopla o processo de envio de e-mails do fluxo principal da aplicação, além de a integração com o SQS proporcionar uma camada adicional de confiabilidade.
+
+- express.js - para o desenvolvimento da camada de API por conta de sua simplicidade, flexibilidade e rápida implementação dos endpoints, somado à facilidade de se aplicar os princípios da Clean Architecture, proporcionando uma maior manutenibilidade do código e permitindo alterações e adições de novos recursos com mais facilidade.
+
+### Rotas
+
+Rotas do serviço e fluxo do sistema de envio de e-mails com a lista de pontos:
+
+![diagrama2](https://github.com/SOAT-01/hackathon-monolithic/assets/37314933/272b70ce-34c7-44ed-83eb-1e3a065b2e21)
+
 ## FASE 2 - Evolução
 
 ![Fase2_HACK_SOAT1 drawio](https://github.com/SOAT-01/hackathon-monolithic/assets/23150778/b55b6de2-a678-46b3-9f61-1a5ebde4e3f3)
