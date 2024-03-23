@@ -213,12 +213,6 @@ export class PontoUseCase implements IPontoUseCase {
                 );
 
                 const totalTempo = this.sumTime(firstPeriod, secondPeriod);
-                if (date === "01-02-2024")
-                    console.log({
-                        firstPeriod,
-                        secondPeriod,
-                        totalTempo,
-                    });
 
                 result.push({
                     data: date,
