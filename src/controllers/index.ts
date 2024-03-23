@@ -1,5 +1,5 @@
-import { PedidoControllerFactory } from "./pedido";
 import { HealthControllerFactory } from "./health";
+import { PontoControllerFactory } from "./ponto";
 
-export const pedidoController = PedidoControllerFactory.create();
 export const healthController = HealthControllerFactory.create();
+export const pontoController = PontoControllerFactory.create();

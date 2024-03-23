@@ -1,31 +1,37 @@
-import { Email } from "valueObjects";
-
-import { Entity } from "../interfaces/entity.interface";
+import { Entity } from "interfaces/entity.interface";
 import { AssertionConcern } from "utils/assertionConcern";
-
-interface UsuarioProperties
-    extends Omit<
-        Usuario,
-        "id" | "createdAt" | "updatedAt" | "deletedAt" | "validateEntity"
-    > {
-    id?: string;
-}
 
 export class Usuario implements Entity {
     id: string;
+    matricula: string;
     nome: string;
-    email: Email;
+    email: string;
 
-    constructor(fields: UsuarioProperties) {
-        this.id = fields?.id;
-        this.nome = fields.nome;
-        this.email = fields.email;
+    constructor({
+        id,
+        matricula,
+        nome,
+        email,
+    }: {
+        id: string;
+        matricula: string;
+        nome: string;
+        email: string;
+    }) {
+        this.id = id;
+        this.matricula = matricula;
+        this.nome = nome;
+        this.email = email;
 
         this.validateEntity();
     }
 
     public validateEntity(): void {
         AssertionConcern.assertArgumentNotEmpty(this.nome, "Nome is required");
+        AssertionConcern.assertArgumentNotEmpty(
+            this.matricula,
+            "Matricula is required",
+        );
         AssertionConcern.assertArgumentNotEmpty(
             this.email,
             "Email is required",

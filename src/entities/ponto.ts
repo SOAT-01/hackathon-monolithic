@@ -2,8 +2,10 @@ import { Entity } from "interfaces/entity.interface";
 import { AssertionConcern } from "utils/assertionConcern";
 
 export enum TipoEnum {
-    Entrada = "saida",
-    Saida = "entrada",
+    Entrada = "entrada",
+    SaidaIntervalo = "saida_intervalo",
+    RetornoIntervalo = "entrada_intervalo",
+    Saida = "saida",
 }
 
 export type Tipo = `${TipoEnum}`;
@@ -13,26 +15,22 @@ export class Ponto implements Entity {
     tipo: Tipo;
     data: Date;
     usuarioId: string;
-    observacao: string;
 
     constructor({
         id,
         tipo,
         data,
         usuarioId,
-        observacao,
     }: {
         id?: string;
         tipo: Tipo;
         data: Date;
         usuarioId: string;
-        observacao: string;
     }) {
         this.id = id;
         this.tipo = tipo;
         this.data = data;
         this.usuarioId = usuarioId;
-        this.observacao = observacao;
 
         this.validateEntity();
     }
@@ -40,20 +38,13 @@ export class Ponto implements Entity {
     public validateEntity(): void {
         AssertionConcern.assertArgumentNotEmpty(
             this.usuarioId,
-            "Preço is required",
+            "UsuarioId is required",
         );
-        AssertionConcern.assertArgumentNotEmpty(
-            this.tipo,
-            "Categoria is required",
-        );
+        AssertionConcern.assertArgumentNotEmpty(this.tipo, "Tipo is required");
         AssertionConcern.assertArgumentIsValid(
             this.tipo,
             Object.values(TipoEnum),
-            "Categoria should have a valid value",
-        );
-        AssertionConcern.assertArgumentNotEmpty(
-            this.observacao,
-            "Descrição is required",
+            "Tipo should have a valid value",
         );
     }
 }

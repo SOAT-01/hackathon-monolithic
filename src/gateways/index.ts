@@ -1,3 +1,2 @@
-export * from "./produtoGateway";
-export * from "./clienteGateway";
-export * from "./pedidoGateway";
+export * from "./pontoGateway";
+export * from "./usuarioGateway";

@@ -1,4 +1,3 @@
-import { Item } from "entities/pedido";
 import { ValidationError } from "utils/errors/validationError";
 
 export class AssertionConcern {
@@ -97,15 +96,6 @@ export class AssertionConcern {
     ): void {
         if (arg <= 0) {
             throw new ValidationError(message);
-        }
-    }
-
-    public static assertArgumentHasQuantityAndPrice(
-        arr: Item[],
-        message: string,
-    ): void {
-        if (arr.some((item) => !item.quantidade || !item.preco)) {
-            throw new Error(message);
         }
     }
 
