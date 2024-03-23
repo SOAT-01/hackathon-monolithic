@@ -44,7 +44,7 @@ export class PontoController {
 
         try {
             await this.pontoUseCase.getEmailReportByUsuarioId(usuarioId);
-            return res.status(StatusCode.ok);
+            return res.status(StatusCode.ok).end();
         } catch (error) {
             next(error);
         }
