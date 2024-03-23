@@ -58,13 +58,13 @@ http://localhost:6001/api-docs
 
 ![Fase2_HACK_SOAT1 drawio](https://github.com/SOAT-01/hackathon-monolithic/assets/23150778/b55b6de2-a678-46b3-9f61-1a5ebde4e3f3)
 
-**desempenho:** o nosso cluster terá HPA para redimensionar a quantidade de pods disponíveis conforme o número de transações aumentar.
-**disponibilidade e escalabilidade:** vamos garantir usando o EKS onde vamos configurar os horários de pico que podem ter mais réplicas do serviço de Registro de ponto, e também mais alguns parâmetros para processamento. Com Load Balancers vamos garantir a disponibilidade, para caso instâncias falhem para redirecionar o tráfego para instâncias saudáveis.
-**segurança:** a lambda authorizer junto com api gateway vai proteger o acesso às nossas API's apenas por usuários autenticados. E também usaremos a parte de criptografia da AWS no RDS para os dados.
-**integridade dos dados:** como usaremos a saga coreografada, já que não são muitos serviços e comunicações. Um registro de ponto só será alterado quando o serviço de análise publicar na fila de análises finalizadas. E por sua vez, o serviço de análises, só irá publicar o registro nessa fila apenas se o banco de dados retornar sucesso. 
-**manutenibilidade:** os serviços estarão em repositórios diferentes, cada qual com sua responsabilidade e contexto e no código vamos manter o padrão de clean archtecture.
-**resiliência:** a princípio manteremos os load balancers em cada serviço para garantir o redirecionamento das requisições para instâncias saudáveis.
-**conformidade:** através da requisição de anonimização de dados no serviço de usuários, vamos garantir a LGPD.
+- **desempenho:** o nosso cluster terá HPA para redimensionar a quantidade de pods disponíveis conforme o número de transações aumentar.
+- **disponibilidade e escalabilidade:** vamos garantir usando o EKS onde vamos configurar os horários de pico que podem ter mais réplicas do serviço de Registro de ponto, e também mais alguns parâmetros para processamento. Com Load Balancers vamos garantir a disponibilidade, para caso instâncias falhem para redirecionar o tráfego para instâncias saudáveis.
+- **segurança:** a lambda authorizer junto com api gateway vai proteger o acesso às nossas API's apenas por usuários autenticados. E também usaremos a parte de criptografia da AWS no RDS para os dados.
+- **integridade dos dados:** como usaremos a saga coreografada, já que não são muitos serviços e comunicações. Um registro de ponto só será alterado quando o serviço de análise publicar na fila de análises finalizadas. E por sua vez, o serviço de análises, só irá publicar o registro nessa fila apenas se o banco de dados retornar sucesso. 
+- **manutenibilidade:** os serviços estarão em repositórios diferentes, cada qual com sua responsabilidade e contexto e no código vamos manter o padrão de clean archtecture.
+- **resiliência:** a princípio manteremos os load balancers em cada serviço para garantir o redirecionamento das requisições para instâncias saudáveis.
+- **conformidade:** através da requisição de anonimização de dados no serviço de usuários, vamos garantir a LGPD.
 
 ### Sobre a arquitetura da fase 2  no geral:
 
